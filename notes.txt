@@ -1,0 +1,10 @@
+Go through Comichron and identify when table format changes.  Should just be column headers?
+Create database schemas
+Decide where to host the damn thing.  PythonAnywhere has some good tools, but the Beelink gives me total control.
+Is this where I learn Docker?
+
+Thoughts on the actual code bit:
+Create comic as class.  Class attributes: issue number, on-sale date, publisher, price, title, units Should
+
+Or do I want to do comic as class, issue as sub-class?
+Potential advantage: define class method to pull all sales data, maybe even plot attrition curve.
