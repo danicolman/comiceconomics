@@ -1,9 +1,10 @@
 from bs4 import BeautifulSoup as bs
 import requests
-import formats
+import re
+import methods
 from pprint import pprint
 
-URL = "https://comichron.com/monthlycomicssales/1997/1997-04.html"
+URL = "https://comichron.com/monthlycomicssales/2019/2019-11.html"
 page = requests.get(URL)
 
 soup = bs(page.content, "html.parser")
@@ -18,10 +19,15 @@ for comic in comics[1:11]:
     data = comic.find_all("td")
     comic_data = {
         "title": data[2].find("a").contents[0],
-        "issue": int(data[3].text),
+        "issue": int(
+            re.sub("\D", "", data[3].text)
+        ),  # use regex sub to discard any non-numeric characters.  May want to split instead so as to capture additional information.
         "price": float(data[4].text.strip("$")),
-        "publisher": data[5].text,
-        "units_sold": int(data[6].find("strong").text.replace(",", "")),
+        # format change in 2017 to add "On Sale" date.  Adjusts list index to match.
+        "publisher": data[5].text if len(data) == 7 else data[6].text,
+        "units_sold": int(data[6].find("strong").text.replace(",", ""))
+        if len(data) == 7
+        else int(data[7].find("strong").text.replace(",", "")),
     }
     comics_list.append(comic_data)
 

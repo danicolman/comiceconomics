@@ -4,7 +4,7 @@ Decide where to host the damn thing.  PythonAnywhere has some good tools, but th
 Is this where I learn Docker?
 
 Thoughts on the actual code bit:
-Create comic as class.  Class attributes: issue number, on-sale date, publisher, price, title, units Should
+Create comic as class.  Class attributes: issue number, on-sale date (month, year), publisher, price, title, units sold
 
 Or do I want to do comic as class, issue as sub-class?
 Potential advantage: define class method to pull all sales data, maybe even plot attrition curve.

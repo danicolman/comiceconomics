@@ -29,8 +29,10 @@ def find_columns(url):
     return headers
 
 
-for url in make_urls():
-    if len(find_columns(url)) == 7:
-        print(url)
-    else:
-        print(url.upper())
+print(f"There are {len(make_urls())} months of data.")
+
+# for url in make_urls():
+#     if len(find_columns(url)) == 7:
+#         print(url)
+#     else:
+#         print(url.upper())
