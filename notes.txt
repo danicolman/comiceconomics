@@ -4,7 +4,11 @@ Decide where to host the damn thing.  PythonAnywhere has some good tools, but th
 Is this where I learn Docker?
 
 Thoughts on the actual code bit:
-Create comic as class.  Class attributes: issue number, on-sale date (month, year), publisher, price, title, units sold
+Create comic as class.  Class attributes: issue number, on-sale date (month, year), publisher, price, title, units sold DONE
 
 Or do I want to do comic as class, issue as sub-class?
 Potential advantage: define class method to pull all sales data, maybe even plot attrition curve.
+
+IMPORTANT: combined sales figs are broken out at the bottom of the table.  Need to re-work logic to discard table entries outside top 500.
+
+Can I update the scrape method to pull dynamically based on position of relevant column header?

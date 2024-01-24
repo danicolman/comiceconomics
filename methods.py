@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup as bs
 import requests
+from pprint import pprint
 
 
 # programmatically generate urls for dates in range
@@ -22,17 +23,29 @@ def make_urls():
     return urls
 
 
+def get_comics(url):
+    page = requests.get(url)
+
+    soup = bs(page.content, "html.parser")
+
+    results = soup.find(id="Top300Comics")
+
+    comics = results.find_all("tr")
+
+    headers = find_columns(
+        url
+    )  # attempt to pass header information to class constructor
+
+    return comics
+
+
 def find_columns(url):
     soup = bs(requests.get(url).content, "html.parser")
     table = soup.find("table", id="Top300Comics")
     headers = table.findAll("th")
+    for header in headers:
+        headers[headers.index(header)] = header.text
     return headers
 
 
-print(f"There are {len(make_urls())} months of data.")
-
-# for url in make_urls():
-#     if len(find_columns(url)) == 7:
-#         print(url)
-#     else:
-#         print(url.upper())
+# pprint(get_comics("https://comichron.com/monthlycomicssales/2020/2020-02.html")[0])
