@@ -1,5 +1,7 @@
-Go through Comichron and identify when table format changes.  Should just be column headers?
+Go through Comichron and identify when table format changes.  Should just be column headers? DONE
+
 Create database schemas
+
 Decide where to host the damn thing.  PythonAnywhere has some good tools, but the Beelink gives me total control.
 Is this where I learn Docker?
 
@@ -11,4 +13,6 @@ Potential advantage: define class method to pull all sales data, maybe even plot
 
 IMPORTANT: combined sales figs are broken out at the bottom of the table.  Need to re-work logic to discard table entries outside top 500.
 
-Can I update the scrape method to pull dynamically based on position of relevant column header?
+Can I update the scrape method to pull dynamically based on position of relevant column header? DONE
+
+Figure out how to add date to class information.  Month & year generated in get_urls() function - pass as return?

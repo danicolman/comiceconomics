@@ -32,10 +32,6 @@ def get_comics(url):
 
     comics = results.find_all("tr")
 
-    headers = find_columns(
-        url
-    )  # attempt to pass header information to class constructor
-
     return comics
 
 
