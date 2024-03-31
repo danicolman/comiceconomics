@@ -2,26 +2,8 @@ from bs4 import BeautifulSoup as bs
 import requests
 from pprint import pprint
 
-
-# programmatically generate urls for dates in range
-def make_urls():
-    base_url = "https://comichron.com/monthlycomicssales/{year}/{year}-{month}.html"
-
-    urls = []
-
-    for year in range(1997, 2021):
-        if year == 1997:
-            monthrange = (4, 13)
-        elif year == 2020:
-            monthrange = (1, 4)
-        else:
-            monthrange = (1, 13)
-        for month in range(monthrange[0], monthrange[1]):
-            month = str(month) if len(str(month)) == 2 else "0" + str(month)
-            urls.append(base_url.format(year=year, month=month))
-
-    return urls
-
+def make_url(year, month):
+    return "https://comichron.com/monthlycomicssales/{year}/{year}-{month}.html".format(year=year, month=month)
 
 def get_comics(url):
     page = requests.get(url)
@@ -34,7 +16,6 @@ def get_comics(url):
 
     return comics
 
-
 def find_columns(url):
     soup = bs(requests.get(url).content, "html.parser")
     table = soup.find("table", id="Top300Comics")
@@ -43,5 +24,14 @@ def find_columns(url):
         headers[headers.index(header)] = header.text
     return headers
 
-
-# pprint(get_comics("https://comichron.com/monthlycomicssales/2020/2020-02.html")[0])
+dates = []
+for year in range(1997, 2021):
+    if year == 1997:
+        monthrange = (4, 13)
+    elif year == 2020:
+        monthrange = (1, 4)
+    else:
+        monthrange = (1, 13)
+    for month in range(monthrange[0], monthrange[1]):
+        month = str(month) if len(str(month)) == 2 else "0" + str(month)
+        dates.append((year, month))

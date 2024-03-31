@@ -1,26 +1,37 @@
 from bs4 import BeautifulSoup as bs
 import requests
 import re
-from methods import make_urls, get_comics, find_columns
+from methods import make_url, get_comics, find_columns, dates
 from pprint import pprint
-from classes import Issue
+from classes_copy import Issue
+import xlsxwriter
+import datetime
+import pandas as pd
 
-# URL = "https://comichron.com/monthlycomicssales/2019/2019-11.html"
-# page = requests.get(URL)
+# for url in make_urls()[270:]:
+#     print(url)
+#     headers = find_columns(url)
+#     comics = get_comics(url)[1:]
+#     for comic in comics[:5]:
+#         Issue(comic, headers).sales_report()
 
-# soup = bs(page.content, "html.parser")
+#messy notes clean this up later
 
-# results = soup.find(id="Top300Comics")
-
-# comics = results.find_all("tr")
-
-# comics_list = []
-
-for url in make_urls()[270:]:
-    print(url)
-    headers = find_columns(url)
-    comics = get_comics(url)[1:]
-    for comic in comics[:5]:
-        Issue(comic, headers).sales_report()
-
-# how do I take the month & year from the url constructor and turn it into datetime information?
+with pd.ExcelWriter("datatest.xlsx") as writer:
+    for date in dates:
+        year, month = date
+        url = make_url(*date)
+        print(url)
+        headers = find_columns(url)
+        comics = get_comics(url)[1:]
+        cl = []
+    
+        for comic in comics:
+            c = {}
+            for header in headers:
+                # print(header, comic.contents[headers.index(header)].text)
+                c.update({header: comic.contents[headers.index(header)].text})
+            # pprint(c)
+            cl.append(c)
+        df = pd.DataFrame.from_dict(cl)
+        df.to_excel(writer, sheet_name=datetime.date(year,int(month),1).strftime("%B, %Y"))
